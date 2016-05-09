@@ -35,13 +35,13 @@ func JwtStrategy(c *iris.Context) {
 
 func Decode(tokenString string) (*jwt.Token, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-    	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-        	return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-        }        
-        return []byte(mySigningKey), nil
-    })
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}        
+		return []byte(mySigningKey), nil
+	})
 
-    if err == nil && token.Valid {
+    	if err == nil && token.Valid {
 		return token,nil
 	} else {
 		return nil,err
