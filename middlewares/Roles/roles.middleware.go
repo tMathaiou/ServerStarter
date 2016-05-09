@@ -12,11 +12,7 @@ import (
 
 
 func IsAdmin(c *iris.Context) {	
-	data, _ := json.Marshal(c.Get("user"))
-	s := string(data)
-	bytes := []byte(s)
-    	var user userModel.Users
-    	json.Unmarshal(bytes, &user)
+	user := c.Get("user").(userModel.Users)
 
 	if user.Role != "" && user.Role == "admin" {		        
 	   c.Next() 
