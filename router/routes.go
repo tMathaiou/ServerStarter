@@ -2,11 +2,11 @@ package router
 
 import(
 	"github.com/kataras/iris"
-	"startup/controllers/Users"
-	"startup/controllers/Auth"
-	"startup/middlewares/login" 
-	"startup/middlewares/Auth"
-	"startup/middlewares/Roles"
+	"ServerStarter/controllers/Users"
+	"ServerStarter/controllers/Auth"
+	"ServerStarter/middlewares/login" 
+	"ServerStarter/middlewares/Auth"
+	"ServerStarter/middlewares/Roles"
 )
 
 func Routes(){   
@@ -14,6 +14,11 @@ func Routes(){
 	iris.Post("/login", loginMiddleware.LocalStrategy, authController.Auth)	
 
 	iris.Get("/users", authMiddleware.JwtStrategy, userController.Get)
+
+	iris.Get("/temp", authMiddleware.JwtStrategy, func(c *iris.Context) {
+        user := c.Get("user")
+        c.JSON(200, user)
+    })
 
 	iris.Get("/users/:id", authMiddleware.JwtStrategy, userController.GetOne)
 

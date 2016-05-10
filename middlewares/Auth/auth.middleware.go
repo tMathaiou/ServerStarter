@@ -1,7 +1,7 @@
 package authMiddleware
 
 import (
-	"startup/models/Users"
+	"ServerStarter/models/Users"
 	"github.com/kataras/iris"
  	"fmt"	
  	"github.com/dgrijalva/jwt-go"

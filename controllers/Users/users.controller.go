@@ -1,7 +1,7 @@
 package userController
 
 import(
-	"startup/models/Users"
+	"ServerStarter/models/Users"
  	"github.com/kataras/iris"
 	//"fmt"
 	"strconv"

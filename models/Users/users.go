@@ -4,7 +4,7 @@ package userModel
 import (
     "golang.org/x/crypto/bcrypt"  
     "fmt"  
-    "startup/database"
+    "ServerStarter/database"
 )
 
 
