@@ -18,7 +18,7 @@ func JwtStrategy(c *iris.Context) {
 		return
 	}
 	
-	exist := userModel.FindById(fmt.Sprintf("%.2f", valid.Claims["id"]))
+	exist := userModel.FindById(fmt.Sprintf("%v", valid.Claims["id"]))
 	
 
 	if exist.Email == "" {
