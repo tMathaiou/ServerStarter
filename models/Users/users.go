@@ -18,14 +18,16 @@ type Users struct {
 type UsersArray struct { Users []Users }
 
 
-func (u *Users) BeforeSave() (err error) {   
-
-    // Hashing the password with the default cost of 10
-    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+func hash(password string) (string){
+   hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
     if err != nil {
         panic(err)
-    }
-    u.Password = string(hashedPassword)
+    }    
+    return string(hashedPassword)
+}
+
+func (u *Users) BeforeCreate() (err error) {   
+    u.Password = hash(u.Password)
     return
 }
 
@@ -74,17 +76,14 @@ func Update(id string, data *Users) (err error) {
   user :=  Users{} 
 
   db.Db.Find(&user, id) 
-  
-  user.Email = data.Email
 
-  user.Role = data.Role
-
-
-  if data.Password != "" {   
-    user.Password = data.Password
+  if data.Password == ""{
+    db.Db.Model(&user).Updates(Users{Email: data.Email, Role: data.Role})
+  }else{
+    data.Password = hash(data.Password)
+    db.Db.Model(&user).Updates(Users{Email: data.Email, Role: data.Role, Password: data.Password})
   }
 
-  db.Db.Save(&user) 
   return 
 }
 
